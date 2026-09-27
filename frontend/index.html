@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Linkless - Share data over the internet without links or contacts using a temporary code."
+    >
+
+    <meta
+        name="author"
+        content="Linkless"
+    >
+
+    <title>
+        Linkless — No Link. No Contact. Just Code.
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <div class="container header-container">
+
+            <a
+                href="#home"
+                class="logo"
+            >
+                Linkless
+            </a>
+
+
+            <nav class="navbar">
+
+                <a href="#home">
+                    Home
+                </a>
+
+                <a href="#how-it-works">
+                    How It Works
+                </a>
+
+                <a href="#security">
+                    Security
+                </a>
+
+                <a href="#about">
+                    About
+                </a>
+
+            </nav>
+
+
+            <button
+                type="button"
+                class="btn btn-primary"
+                onclick="getStarted()"
+            >
+                Get Started
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main>
+
+
+        <!-- ================= HERO ================= -->
+
+        <section
+            id="home"
+            class="hero"
+        >
+
+            <div class="container hero-container">
+
+
+                <!-- HERO CONTENT -->
+
+                <div class="hero-content">
+
+
+                    <p class="eyebrow">
+                        CONTACTLESS DATA SHARING
+                    </p>
+
+
+                    <h1>
+
+                        No Link.
+                        <br>
+
+                        No Contact.
+                        <br>
+
+                        <span>
+                            Just Code.
+                        </span>
+
+                    </h1>
+
+
+                    <p class="hero-description">
+
+                        Share text, files and data over the
+                        internet using a simple temporary code.
+
+                    </p>
+
+
+                    <!-- HERO BUTTONS -->
+
+                    <div class="hero-buttons">
+
+
+                        <!-- SEND DATA -->
+
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            onclick="openFilePicker()"
+                        >
+                            Send Data
+                        </button>
+
+
+                        <!-- RECEIVE DATA -->
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            onclick="receiveData()"
+                        >
+                            Receive Data
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- ================= FILE INPUT ================= -->
+
+                    <input
+                        type="file"
+                        id="fileInput"
+                        hidden
+                        multiple
+                    >
+
+
+
+                    <!-- ================= SELECTED FILES ================= -->
+
+                    <div id="selectedFiles"></div>
+
+
+
+                    <!-- ================= GENERATE CODE ================= -->
+
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="uploadBtn"
+                    >
+                        Generate Share Code
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- ================= SHARE CARD ================= -->
+
+                <div class="share-card">
+
+
+                    <p class="share-label">
+                        YOUR SHARE CODE
+                    </p>
+
+
+                    <h2 id="shareCode">
+                        LX82K7
+                    </h2>
+
+
+                    <p class="expiry">
+
+                        Expires in
+
+                        <strong id="expiryTime">
+                            10:00
+                        </strong>
+
+                    </p>
+
+
+                    <button
+                        type="button"
+                        class="copy-btn"
+                        onclick="copyCode(document.getElementById('shareCode').textContent)"
+                    >
+                        Copy Code
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= RECEIVE MODAL ================= -->
+
+        <div
+            id="receiveModal"
+            class="receive-modal"
+        >
+
+            <div class="receive-box">
+
+
+                <button
+                    type="button"
+                    class="receive-close"
+                    onclick="closeReceiveModal()"
+                >
+                    ×
+                </button>
+
+
+                <p class="eyebrow">
+                    RECEIVE DATA
+                </p>
+
+
+                <h2>
+                    Enter Share Code
+                </h2>
+
+
+                <p class="receive-description">
+
+                    Enter the temporary code shared with you
+                    to retrieve the data.
+
+                </p>
+
+
+                <form
+                    id="receiveForm"
+                >
+
+
+                    <label
+                        for="receiveCode"
+                    >
+                        Share Code
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="receiveCode"
+                        name="receiveCode"
+                        placeholder="Enter 6-character code"
+                        minlength="6"
+                        maxlength="6"
+                        autocomplete="off"
+                        required
+                    >
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary receive-submit"
+                    >
+                        Get Data
+                    </button>
+
+
+                </form>
+
+
+                <p
+                    id="receiveMessage"
+                    class="receive-message"
+                ></p>
+
+
+                <!-- RECEIVED FILES -->
+
+                <div
+                    id="receivedFiles"
+                    class="received-files"
+                ></div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= FEATURES ================= -->
+
+        <section class="features">
+
+
+            <div class="container">
+
+
+                <div class="section-heading">
+
+
+                    <p class="eyebrow">
+                        WHY LINKLESS
+                    </p>
+
+
+                    <h2>
+                        Simple. Private. Temporary.
+                    </h2>
+
+
+                </div>
+
+
+
+                <div class="feature-grid">
+
+
+                    <article class="feature-card">
+
+                        <span class="feature-number">
+                            01
+                        </span>
+
+
+                        <h3>
+                            No Contact Required
+                        </h3>
+
+
+                        <p>
+                            Share data without saving phone
+                            numbers or contacts.
+                        </p>
+
+                    </article>
+
+
+
+                    <article class="feature-card">
+
+                        <span class="feature-number">
+                            02
+                        </span>
+
+
+                        <h3>
+                            Temporary Sharing
+                        </h3>
+
+
+                        <p>
+                            Shared data can automatically
+                            expire after a selected time.
+                        </p>
+
+                    </article>
+
+
+
+                    <article class="feature-card">
+
+                        <span class="feature-number">
+                            03
+                        </span>
+
+
+                        <h3>
+                            Easy to Use
+                        </h3>
+
+
+                        <p>
+                            Generate a code, share it and
+                            receive the data.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= HOW IT WORKS ================= -->
+
+        <section
+            id="how-it-works"
+            class="how-it-works"
+        >
+
+
+            <div class="container">
+
+
+                <div class="section-heading">
+
+
+                    <p class="eyebrow">
+                        HOW IT WORKS
+                    </p>
+
+
+                    <h2>
+                        Four simple steps.
+                    </h2>
+
+
+                </div>
+
+
+
+                <div class="steps-grid">
+
+
+                    <article class="step">
+
+                        <span class="step-number">
+                            01
+                        </span>
+
+
+                        <h3>
+                            Add Your Data
+                        </h3>
+
+
+                        <p>
+                            Select the files or data you
+                            want to share.
+                        </p>
+
+                    </article>
+
+
+
+                    <article class="step">
+
+                        <span class="step-number">
+                            02
+                        </span>
+
+
+                        <h3>
+                            Generate Code
+                        </h3>
+
+
+                        <p>
+                            Linkless creates a unique
+                            temporary sharing code.
+                        </p>
+
+                    </article>
+
+
+
+                    <article class="step">
+
+                        <span class="step-number">
+                            03
+                        </span>
+
+
+                        <h3>
+                            Share the Code
+                        </h3>
+
+
+                        <p>
+                            Send the code to the person
+                            who needs your data.
+                        </p>
+
+                    </article>
+
+
+
+                    <article class="step">
+
+                        <span class="step-number">
+                            04
+                        </span>
+
+
+                        <h3>
+                            Receive Data
+                        </h3>
+
+
+                        <p>
+                            The receiver enters the code
+                            and retrieves the shared data.
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= SECURITY ================= -->
+
+        <section
+            id="security"
+            class="security"
+        >
+
+
+            <div class="container security-container">
+
+
+                <div class="section-heading">
+
+
+                    <p class="eyebrow">
+                        SECURITY
+                    </p>
+
+
+                    <h2>
+                        Built around temporary sharing.
+                    </h2>
+
+
+                    <p>
+                        Linkless is designed to keep sharing
+                        simple and controlled.
+                    </p>
+
+
+                </div>
+
+
+
+                <div class="security-list">
+
+
+                    <div class="security-item">
+
+                        <h3>
+                            Temporary Data
+                        </h3>
+
+
+                        <p>
+                            Shared data can be automatically
+                            removed after expiration.
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="security-item">
+
+                        <h3>
+                            One-Time Access
+                        </h3>
+
+
+                        <p>
+                            A sharing session can be configured
+                            for limited access.
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="security-item">
+
+                        <h3>
+                            Unique Code
+                        </h3>
+
+
+                        <p>
+                            Each sharing session receives
+                            a unique code.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= ABOUT ================= -->
+
+        <section
+            id="about"
+            class="about"
+        >
+
+
+            <div class="container about-container">
+
+
+                <div class="section-heading">
+
+
+                    <p class="eyebrow">
+                        ABOUT LINKLESS
+                    </p>
+
+
+                    <h2>
+                        Share without the hassle.
+                    </h2>
+
+
+                    <p>
+
+                        Linkless is an internet-based temporary
+                        data-sharing platform designed to make
+                        sharing simple without requiring users
+                        to exchange links or save contacts.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <div class="about-points">
+
+
+                    <div>
+
+                        <h3>
+                            No Contact
+                        </h3>
+
+
+                        <p>
+                            No need to save phone numbers or
+                            exchange contact information.
+                        </p>
+
+                    </div>
+
+
+
+                    <div>
+
+                        <h3>
+                            Simple Sharing
+                        </h3>
+
+
+                        <p>
+                            Create a temporary code and share
+                            it with the receiver.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+
+        <div class="container footer-container">
+
+
+            <div>
+
+                <h3>
+                    Linkless
+                </h3>
+
+
+                <p>
+                    No Link. No Contact. Just Code.
+                </p>
+
+            </div>
+
+
+
+            <p class="copyright">
+
+                © 2026 Linkless.
+                All rights reserved.
+
+            </p>
+
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="js/script.js"></script>
+
+
+</body>
+
+</html>
