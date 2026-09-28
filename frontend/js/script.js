@@ -18,6 +18,7 @@ const fileInput = document.getElementById("fileInput");
 const selectedFiles = document.getElementById("selectedFiles");
 const uploadBtn = document.getElementById("uploadBtn");
 const receiveBtn = document.getElementById("receiveBtn");
+const receiveCloseBtn=getElementById("receiveCloseBtn")
 
 const shareCodeElement =
     document.getElementById("shareCode");
@@ -366,6 +367,7 @@ function receiveData() {
 
 }
 receiveBtn.addEventListener("click",receiveData);
+receiveCloseBtn.addEventListener("click",closeReceiveModal)
 
 
 // ==========================================
