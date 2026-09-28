@@ -2,38 +2,20 @@
 // LINKLESS - SERVER
 // ==========================================
 
-
-
 // ==========================================
 // IMPORTS
 // ==========================================
 
-const express =
-    require("express");
+const express = require("express");
+const cors = require("cors");
+const multer = require("multer");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
 
-const cors =
-    require("cors");
-
-const multer =
-    require("multer");
-
-const helmet =
-    require("helmet");
-
-const rateLimit =
-    require("express-rate-limit");
-
-const fs =
-    require("fs");
-
-const path =
-    require("path");
-
-const crypto =
-    require("crypto");
-
-const connectDatabase =
-    require("./config/database");
+const connectDatabase = require("./config/database");
 
 // ==========================================
 // APP
@@ -47,13 +29,9 @@ connectDatabase();
 // SECURITY
 // ==========================================
 
-app.use(
-    helmet()
-);
+app.use(helmet());
 
-app.use(
-    cors()
-);
+app.use(cors());
 
 app.use(
     express.json({
@@ -65,20 +43,17 @@ app.use(
 // GENERAL API RATE LIMIT
 // ==========================================
 
-const apiLimiter =
-    rateLimit({
-        windowMs: 15 * 60 * 1000,
-        max: 100,
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
 
-        standardHeaders: true,
-        legacyHeaders: false,
-
-        message: {
-            success: false,
-            message:
-                "Too many requests. Please try again later."
-        }
-    });
+    message: {
+        success: false,
+        message: "Too many requests. Please try again later."
+    }
+});
 
 app.use(
     "/api/share",
@@ -89,55 +64,44 @@ app.use(
 // SHARE CODE RATE LIMIT
 // ==========================================
 
-const shareCodeLimiter =
-    rateLimit({
-        windowMs: 15 * 60 * 1000,
-        max: 10,
+const shareCodeLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 10,
+    standardHeaders: true,
+    legacyHeaders: false,
 
-        standardHeaders: true,
-        legacyHeaders: false,
-
-        message: {
-            success: false,
-            message:
-                "Too many attempts. Please try again later."
-        }
-    });
+    message: {
+        success: false,
+        message: "Too many attempts. Please try again later."
+    }
+});
 
 // ==========================================
 // UPLOAD RATE LIMIT
 // ==========================================
 
-const uploadLimiter =
-    rateLimit({
-        windowMs: 15 * 60 * 1000,
-        max: 20,
+const uploadLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 20,
+    standardHeaders: true,
+    legacyHeaders: false,
 
-        standardHeaders: true,
-        legacyHeaders: false,
-
-        message: {
-            success: false,
-            message:
-                "Too many uploads. Please try again later."
-        }
-    });
+    message: {
+        success: false,
+        message: "Too many uploads. Please try again later."
+    }
+});
 
 // ==========================================
 // UPLOAD DIRECTORY
 // ==========================================
 
-const uploadDirectory =
-    path.join(
-        __dirname,
-        "uploads"
-    );
+const uploadDirectory = path.join(
+    __dirname,
+    "uploads"
+);
 
-if (
-    !fs.existsSync(
-        uploadDirectory
-    )
-) {
+if (!fs.existsSync(uploadDirectory)) {
     fs.mkdirSync(
         uploadDirectory,
         {
@@ -150,67 +114,62 @@ if (
 // MULTER STORAGE
 // ==========================================
 
-const storage =
-    multer.diskStorage({
+const storage = multer.diskStorage({
 
-        destination:
-            function (
-                req,
-                file,
-                cb
-            ) {
-                cb(
-                    null,
-                    uploadDirectory
-                );
-            },
+    destination: function (
+        req,
+        file,
+        cb
+    ) {
+        cb(
+            null,
+            uploadDirectory
+        );
+    },
 
-        filename:
-            function (
-                req,
-                file,
-                cb
-            ) {
-                const randomName =
-                    crypto.randomUUID();
+    filename: function (
+        req,
+        file,
+        cb
+    ) {
 
-                const extension =
-                    path.extname(
-                        file.originalname
-                    );
+        const randomName =
+            crypto.randomUUID();
 
-                cb(
-                    null,
-                    randomName +
-                    extension
-                );
-            }
-    });
+        const extension =
+            path.extname(
+                file.originalname
+            );
+
+        cb(
+            null,
+            randomName + extension
+        );
+    }
+});
 
 // ==========================================
 // MULTER
 // ==========================================
 
-const upload =
-    multer({
+const upload = multer({
 
-        storage: storage,
+    storage: storage,
 
-        limits: {
+    limits: {
 
-            fileSize:
-                500 * 1024 * 1024,
+        fileSize:
+            500 * 1024 * 1024,
 
-            files: 20
-        }
-    });
+        files: 20
+    }
+});
 
 // ==========================================
 // TEMPORARY SHARE STORAGE
 // ==========================================
 
-const shares =
-    new Map();
+const shares = new Map();
 
 // ==========================================
 // GENERATE SECURE SHARE CODE
@@ -235,8 +194,7 @@ function generateShareCode() {
                 characters.length
             );
 
-        code +=
-            characters[index];
+        code += characters[index];
     }
 
     return code;
@@ -286,6 +244,7 @@ function deleteShare(code) {
                     file.path
                 )
             ) {
+
                 fs.unlinkSync(
                     file.path
                 );
@@ -316,7 +275,10 @@ app.post(
 
     uploadLimiter,
 
-    upload.array("files", 20),
+    upload.array(
+        "files",
+        20
+    ),
 
     (req, res) => {
 
@@ -328,7 +290,9 @@ app.post(
             ) {
 
                 return res.status(400).json({
+
                     success: false,
+
                     message:
                         "Please upload at least one file."
                 });
@@ -654,20 +618,35 @@ setInterval(
 );
 
 // ==========================================
-// HEALTH CHECK
+// FRONTEND
+// ==========================================
+
+const frontendDirectory =
+    path.join(
+        __dirname,
+        "../frontend"
+    );
+
+app.use(
+    express.static(
+        frontendDirectory
+    )
+);
+
+// ==========================================
+// FRONTEND HOME
 // ==========================================
 
 app.get(
     "/",
     (req, res) => {
 
-        res.json({
-
-            success: true,
-
-            message:
-                "Linkless server is running."
-        });
+        res.sendFile(
+            path.join(
+                frontendDirectory,
+                "index.html"
+            )
+        );
     }
 );
 
@@ -741,7 +720,6 @@ const PORT =
 
 app.listen(
     PORT,
-    "0.0.0.0",
     () => {
 
         console.log(
