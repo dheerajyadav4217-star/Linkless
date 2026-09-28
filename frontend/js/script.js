@@ -556,18 +556,13 @@ function displayReceivedFiles(
 
 function downloadFile(
     code,
-    fileIndex
-) {
-
+    fileInput
+){
     const downloadURL =
-        `${API_BASE_URL}/api/share/${encodeURIComponent(code)}/file/${fileIndex}`;
-
-
-    window.open(
-        downloadURL,
-        "_blank"
-    );
-
+    `${API_BASE_URL}/api/shere/$
+    {encodeURIComponent(code)}/file/$
+    {fileIndex}`;
+    window.location.href = downloadURL;
 }
 
 
