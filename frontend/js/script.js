@@ -17,6 +17,7 @@ const API_BASE_URL = "";
 const fileInput = document.getElementById("fileInput");
 const selectedFiles = document.getElementById("selectedFiles");
 const uploadBtn = document.getElementById("uploadBtn");
+const receiveBtn = document.getElementById("receiveBtn");
 
 const shareCodeElement =
     document.getElementById("shareCode");
@@ -364,6 +365,7 @@ function receiveData() {
     receivedFiles.innerHTML = "";
 
 }
+receiveBtn.addEventListener("click",receiveData);
 
 
 // ==========================================
