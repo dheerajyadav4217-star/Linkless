@@ -50,6 +50,12 @@ const textMassage =
 const getStartedBtn =
     document.getElementById("getStartedBtn");
 
+const themeToggle =
+    document.getElementById("themeToggle");
+
+const themeIcon =
+    document.getElementById("themeIcon");
+
 const shareCodeElement =
     document.getElementById("shareCode");
 
@@ -86,6 +92,90 @@ document.addEventListener(
 
     }
 );
+
+
+// ==========================================
+// DARK MODE
+// ==========================================
+
+function applyTheme(theme) {
+
+    if (theme === "dark") {
+
+        document.body.classList.add("dark-mode");
+
+        if (themeIcon) {
+            themeIcon.textContent = "☀️";
+        }
+
+        if (themeToggle) {
+            themeToggle.setAttribute(
+                "aria-label",
+                "Switch to light mode"
+            );
+
+            themeToggle.setAttribute(
+                "title",
+                "Switch to light mode"
+            );
+        }
+
+    } else {
+
+        document.body.classList.remove("dark-mode");
+
+        if (themeIcon) {
+            themeIcon.textContent = "🌙";
+        }
+
+        if (themeToggle) {
+            themeToggle.setAttribute(
+                "aria-label",
+                "Switch to dark mode"
+            );
+
+            themeToggle.setAttribute(
+                "title",
+                "Switch to dark mode"
+            );
+        }
+    }
+}
+
+
+function toggleTheme() {
+
+    const isDark =
+        document.body.classList.contains("dark-mode");
+
+    const nextTheme =
+        isDark ? "light" : "dark";
+
+    localStorage.setItem(
+        "linkless-theme",
+        nextTheme
+    );
+
+    applyTheme(nextTheme);
+}
+
+
+const savedTheme =
+    localStorage.getItem("linkless-theme");
+
+applyTheme(
+    savedTheme ||
+    "light"
+);
+
+
+if (themeToggle) {
+
+    themeToggle.addEventListener(
+        "click",
+        toggleTheme
+    );
+}
 
 
 // ==========================================
@@ -699,7 +789,7 @@ function receiveData() {
 
     receiveCodeInput.focus();
 
-    receiveMessage.textContent =
+    receiveMessage.innerHTML =
         "";
 
     receivedFiles.innerHTML =
@@ -727,7 +817,7 @@ function closeReceiveModal() {
     receiveCodeInput.value =
         "";
 
-    receiveMessage.textContent =
+    receiveMessage.innerHTML =
         "";
 
     receivedFiles.innerHTML =
@@ -785,16 +875,18 @@ receiveForm.addEventListener(
             !validateCode(code)
         ) {
 
-            receiveMessage.textContent =
-                "Please enter a valid 6-character code.";
+            showReceiveStatus(
+                "Please enter a valid 6-character code."
+            );
 
             return;
 
         }
 
 
-        receiveMessage.textContent =
-            "Checking share code...";
+        showReceiveStatus(
+            "Checking share code..."
+        );
 
 
         receivedFiles.innerHTML =
@@ -818,19 +910,19 @@ receiveForm.addEventListener(
                 !result.success
             ) {
 
-                receiveMessage.textContent =
+                showReceiveStatus(
                     result.message ||
-                    "Invalid or expired share code.";
+                    "Invalid or expired share code."
+                );
 
                 return;
 
             }
 
 
-            receiveMessage.textContent =
+            renderReceivedMessage(
                 result.message
-                    ? `Message: ${result.message}`
-                    : "Share found!";
+            );
 
 
             displayReceivedFiles(
@@ -847,13 +939,171 @@ receiveForm.addEventListener(
             );
 
 
-            receiveMessage.textContent =
-                "Unable to connect to Linkless server.";
+            showReceiveStatus(
+                "Unable to connect to Linkless server."
+            );
 
         }
 
     }
 );
+
+
+// ==========================================
+// RECEIVE MESSAGE DISPLAY
+// ==========================================
+
+function showReceiveStatus(message) {
+
+    receiveMessage.innerHTML = "";
+
+    const status =
+        document.createElement("p");
+
+    status.className = "receive-status";
+
+    status.textContent = message;
+
+    receiveMessage.appendChild(status);
+}
+
+
+function renderReceivedMessage(message) {
+
+    receiveMessage.innerHTML = "";
+
+    if (!message) {
+
+        showReceiveStatus(
+            "No text message was shared."
+        );
+
+        return;
+    }
+
+
+    const wrapper =
+        document.createElement("div");
+
+    wrapper.className =
+        "received-message-box";
+
+
+    const header =
+        document.createElement("div");
+
+    header.className =
+        "received-message-header";
+
+
+    const title =
+        document.createElement("h3");
+
+    title.textContent =
+        "Received Message";
+
+
+    const copyButton =
+        document.createElement("button");
+
+    copyButton.type = "button";
+
+    copyButton.className =
+        "message-copy-btn";
+
+    copyButton.textContent =
+        "Copy";
+
+
+    copyButton.addEventListener(
+        "click",
+        async () => {
+
+            try {
+
+                await navigator.clipboard.writeText(
+                    message
+                );
+
+
+                copyButton.textContent =
+                    "Copied!";
+
+
+                setTimeout(
+                    () => {
+
+                        copyButton.textContent =
+                            "Copy";
+
+                    },
+                    1500
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Message copy failed:",
+                    error
+                );
+
+
+                copyButton.textContent =
+                    "Copy failed";
+
+
+                setTimeout(
+                    () => {
+
+                        copyButton.textContent =
+                            "Copy";
+
+                    },
+                    1500
+                );
+
+            }
+
+        }
+    );
+
+
+    header.appendChild(
+        title
+    );
+
+    header.appendChild(
+        copyButton
+    );
+
+
+    const content =
+        document.createElement("div");
+
+    content.className =
+        "received-message-content";
+
+
+    // Preserve original text formatting
+    content.textContent =
+        message;
+
+
+    wrapper.appendChild(
+        header
+    );
+
+    wrapper.appendChild(
+        content
+    );
+
+
+    receiveMessage.appendChild(
+        wrapper
+    );
+
+}
 
 
 // ==========================================
@@ -874,21 +1124,22 @@ function displayReceivedFiles(
         files.length === 0
     ) {
 
-        if (
-            !receivedFiles.innerHTML
-        ) {
+        const message =
+            document.createElement("p");
 
-            const message =
-                document.createElement("p");
 
-            message.textContent =
-                "No files available.";
+        message.className =
+            "no-files-message";
 
-            receivedFiles.appendChild(
-                message
-            );
 
-        }
+        message.textContent =
+            "No files were shared.";
+
+
+        receivedFiles.appendChild(
+            message
+        );
+
 
         return;
 
@@ -908,7 +1159,7 @@ function displayReceivedFiles(
 
             fileElement.innerHTML = `
 
-                <h4>
+        <h4>
                     ${escapeHTML(file.name)}
                 </h4>
 

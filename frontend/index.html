@@ -70,13 +70,25 @@
             </nav>
 
 
-            <button
-                type="button"
-                class="btn btn-primary"
-                id="getStartedBtn"
-            >
-                Get Started
-            </button>
+            <div class="header-actions">
+                <button
+                    type="button"
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Toggle dark mode"
+                    title="Toggle dark mode"
+                >
+                    <span id="themeIcon">🌙</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="getStartedBtn"
+                >
+                    Get Started
+                </button>
+            </div>
 
         </div>
 
@@ -396,10 +408,11 @@
                 </form>
 
 
-                <p
+                <div
                     id="receiveMessage"
                     class="receive-message"
-                ></p>
+                    aria-live="polite"
+                ></div>
 
 
                 <!-- RECEIVED FILES -->

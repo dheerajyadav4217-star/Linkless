@@ -998,7 +998,7 @@ section {
 .footer {
     background: #0b0b0b;
 
-    color: var(--white);
+color: var(--white);
 
     padding: 45px 0;
 }
@@ -1136,4 +1136,396 @@ section {
         font-size: 30px;
     }
 
+}
+
+/* =========================================
+   PROFESSIONAL HEADER ACTIONS
+   ========================================= */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.theme-toggle {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--light);
+    color: var(--black);
+    border: 1px solid var(--border);
+    font-size: 18px;
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
+}
+
+.theme-toggle:hover {
+    transform: rotate(12deg) scale(1.06);
+    border-color: var(--red);
+    color: var(--red);
+}
+
+
+/* =========================================
+   PROFESSIONAL NAV HOVER / ACTIVE EFFECT
+   ========================================= */
+
+.navbar a {
+    position: relative;
+    padding: 8px 0;
+}
+
+.navbar a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: var(--red);
+    border-radius: 10px;
+    transform: translateX(-50%);
+    transition: width 0.28s ease;
+}
+
+.navbar a:hover::after,
+.navbar a:focus-visible::after {
+    width: 100%;
+}
+
+.navbar a:hover {
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   RECEIVED MESSAGE
+   ========================================= */
+
+.receive-message {
+    margin-top: 18px;
+    min-height: 0;
+}
+
+.receive-status {
+    margin: 0;
+    color: var(--red);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.received-message-box {
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--light);
+}
+
+.received-message-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 15px;
+    border-bottom: 1px solid var(--border);
+    background: var(--white);
+}
+
+.received-message-header h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.message-copy-btn {
+    flex-shrink: 0;
+    padding: 7px 13px;
+    border-radius: 7px;
+    background: var(--black);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    transition: 0.2s ease;
+}
+
+.message-copy-btn:hover {
+    background: var(--red);
+    transform: translateY(-1px);
+}
+
+.received-message-content {
+    max-height: 230px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--black);
+    scrollbar-width: thin;
+}
+
+.received-message-content::-webkit-scrollbar {
+    width: 7px;
+}
+
+.received-message-content::-webkit-scrollbar-thumb {
+    background: var(--gray);
+    border-radius: 10px;
+}
+
+.received-message-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+/* =========================================
+   RECEIVED FILES
+   ========================================= */
+
+.received-files {
+    margin-top: 22px;
+    max-height: 270px;
+    overflow-y: auto;
+    padding-right: 3px;
+    scrollbar-width: thin;
+}
+
+.received-files::before {
+    content: "Received Files";
+    display: block;
+    margin-bottom: 10px;
+    color: var(--black);
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.received-file {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 13px 14px;
+    background: var(--light);
+}
+
+.received-file h4 {
+    margin-bottom: 4px;
+}
+
+.received-file p {
+    margin: 0;
+}
+
+.received-file .download-btn {
+    flex-shrink: 0;
+    padding: 9px 14px;
+    font-size: 13px;
+}
+
+.no-files-message {
+    margin: 0;
+    padding: 12px;
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    color: var(--gray);
+    font-size: 13px;
+}
+
+
+/* =========================================
+   DARK MODE
+   ========================================= */
+
+body.dark-mode {
+    --white: #111315;
+    --black: #f5f5f5;
+    --light: #1a1d20;
+    --gray: #a9afb6;
+    --border: #30343a;
+
+    background: #0d0f10;
+    color: #f5f5f5;
+}
+
+body.dark-mode .header {
+    background: rgba(13, 15, 16, 0.92);
+    border-color: var(--border);
+}
+
+body.dark-mode .navbar a {
+    color: #d8dadd;
+}
+
+body.dark-mode .navbar a:hover {
+    color: var(--red);
+}
+
+body.dark-mode .hero,
+body.dark-mode .send-data-page {
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(230, 57, 70, 0.12),
+            transparent 35%
+        );
+}
+
+body.dark-mode .btn-secondary {
+    background: #17191c;
+    color: #f5f5f5;
+    border-color: #35393f;
+}
+
+body.dark-mode .btn-secondary:hover {
+    border-color: #f5f5f5;
+}
+
+body.dark-mode .theme-toggle {
+    background: #1a1d20;
+    color: #f5f5f5;
+    border-color: #35393f;
+}
+
+body.dark-mode .share-card {
+    background: #050606;
+}
+
+body.dark-mode .send-data-box,
+body.dark-mode .receive-box,
+body.dark-mode .feature-card,
+body.dark-mode .received-message-header {
+    background: #151719;
+    border-color: var(--border);
+}
+
+body.dark-mode .message-box textarea,
+body.dark-mode #receiveCode {
+    background: #101214;
+    color: #f5f5f5;
+    border-color: var(--border);
+}
+
+body.dark-mode .message-box textarea::placeholder {
+    color: #777d85;
+}
+
+body.dark-mode .selected-file,
+body.dark-mode .received-file,
+body.dark-mode .received-message-box {
+    background: #1a1d20;
+    border-color: var(--border);
+}
+
+body.dark-mode .received-message-content {
+    color: #f2f2f2;
+}
+
+body.dark-mode .received-message-header {
+    background: #151719;
+}
+
+body.dark-mode .message-copy-btn {
+    background: #f5f5f5;
+    color: #111315;
+}
+
+body.dark-mode .message-copy-btn:hover {
+    background: var(--red);
+    color: #ffffff;
+}
+
+body.dark-mode .features {
+    background: #151719;
+}
+
+body.dark-mode .feature-card {
+    box-shadow: none;
+}
+
+body.dark-mode .about-points > div {
+    background: #1a1d20;
+}
+
+body.dark-mode .step {
+    border-color: #f5f5f5;
+}
+
+body.dark-mode .receive-close {
+    background: #1a1d20;
+    color: #f5f5f5;
+}
+
+body.dark-mode .receive-close:hover {
+    background: var(--red);
+    color: #ffffff;
+}
+
+
+/* =========================================
+   RECEIVE MODAL SCROLL SAFETY
+   ========================================= */
+
+.receive-box {
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+
+.receive-box::-webkit-scrollbar {
+    width: 7px;
+}
+
+.receive-box::-webkit-scrollbar-thumb {
+    background: var(--gray);
+    border-radius: 10px;
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 650px) {
+
+    .header-actions {
+        gap: 7px;
+    }
+
+    .theme-toggle {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+    }
+
+    .header-actions .btn {
+        padding: 10px 13px;
+        font-size: 13px;
+    }
+
+    .received-message-content {
+        max-height: 200px;
+        font-size: 14px;
+    }
+
+    .received-files {
+        max-height: 230px;
+    }
+
+    .received-file {
+        align-items: flex-start;
+    }
+
+    .received-file .download-btn {
+        padding: 8px 11px;
+    }
 }
