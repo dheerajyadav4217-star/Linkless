@@ -554,6 +554,17 @@ function displayReceivedFiles(
         receivedFiles.appendChild(
             fileElement
         );
+        const downloadButton =
+        fileElement.querySelector(".download-btn")
+        downloadButton.addEventListener(
+            "click",
+            () => {
+                downloadFile(
+                    code,
+                    file.id
+                );
+            }
+        );
 
     });
 
