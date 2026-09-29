@@ -17,6 +17,7 @@ const API_BASE_URL = "";
 const fileInput = document.getElementById("fileInput");
 const selectedFiles = document.getElementById("selectedFiles");
 const uploadBtn = document.getElementById("uploadBtn");
+const copyCodeBtn =document.getElementById("copyCodeBtn");
 const receiveBtn = document.getElementById("receiveBtn");
 
 
@@ -347,6 +348,14 @@ function copyCode(code) {
         });
 
 }
+copyCodeBtn.addEventListener(
+    "click",
+    () => {
+        copyCode(
+            document.getElementById("shereCode").textContent
+        );
+    }
+);
 
 
 // ==========================================
