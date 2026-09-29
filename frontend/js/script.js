@@ -19,6 +19,7 @@ const selectedFiles = document.getElementById("selectedFiles");
 const uploadBtn = document.getElementById("uploadBtn");
 const copyCodeBtn =document.getElementById("copyCodeBtn");
 const receiveBtn = document.getElementById("receiveBtn");
+const closeReceiveBtn = document.getElementById("closeReceiveBtn")
 
 
 const shareCodeElement =
@@ -396,6 +397,10 @@ function closeReceiveModal() {
     receivedFiles.innerHTML = "";
 
 }
+closeReceiveBtn.addEventListener(
+    "click",
+    closeReceiveModal
+);
 
 
 // ==========================================
