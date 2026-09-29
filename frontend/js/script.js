@@ -30,6 +30,7 @@ const expiryTimeElement =
 
 const receiveModal =
     document.getElementById("receiveModal");
+const getStartedBtn = document.getElementById("getStartedBtn");    
 
 const receiveForm =
     document.getElementById("receiveForm");
@@ -70,6 +71,10 @@ function getStarted() {
         });
 
 }
+getStartedBtn.addEventListener(
+    "click",
+    getStarted
+);
 
 
 // ==========================================
