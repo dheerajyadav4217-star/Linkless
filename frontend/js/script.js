@@ -554,64 +554,12 @@ function displayReceivedFiles(
 // DOWNLOAD FILE
 // ==========================================
 
-async function downloadFile(
-    code,
-    fileIndex
-) {
-
-    const downloadURL =
-        `${API_BASE_URL}/api/share/${encodeURIComponent(code)}/file/${fileIndex}`;
-
-    try {
-
-        const response =
-            await fetch(downloadURL);
-
-        if (!response.ok) {
-
-            const error =
-                await response.json();
-
-            throw new Error(
-                error.message ||
-                "Download failed."
-            );
-        }
-
-        const blob =
-            await response.blob();
-
-        const url =
-            URL.createObjectURL(blob);
-
-        const link =
-            document.createElement("a");
-
-        link.href = url;
-
-        link.download = "download";
-
-        document.body.appendChild(link);
-
-        link.click();
-
-        link.remove();
-
-        URL.revokeObjectURL(url);
-
-    } catch (error) {
-
-        console.error(
-            "Download failed:",
-            error
-        );
-
-        alert(
-            `Download failed:\n${error.message}`
-        );
-
-    }
-
+function downloadFile(code, fileindex) {
+    const downloadURL = 
+        `${API_BASE_URL}/api/shere/$
+        {encodeURIComponent(code)}/file/$
+        {fileIndex}`;
+        window.location.href = downloadURL
 }
 
 
