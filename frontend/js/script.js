@@ -543,7 +543,8 @@ function displayReceivedFiles(
             <button
                 type="button"
                 class="btn btn-primary"
-                onclick="downloadFile('${code}', ${file.id})"
+                data-code="$(code)"
+                data-index="${file.id}"
             >
                 Download
             </button>
