@@ -575,7 +575,7 @@ function displayReceivedFiles(
 // DOWNLOAD FILE
 // ==========================================
 
-function downloadFile(code, fileindex) {
+function downloadFile(code, fileIndex) {
     const downloadURL = 
         `${API_BASE_URL}/api/shere/${code}/file/${fileIndex}`;
         window.location.href = downloadURL
