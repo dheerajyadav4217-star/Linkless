@@ -30,6 +30,8 @@ const expiryTimeElement =
 
 const receiveModal =
     document.getElementById("receiveModal");
+const addTextBtn = getElementById("addTextBtn");
+const textMassage = document.getElementById("textMassage")   
 const getStartedBtn = document.getElementById("getStartedBtn");    
 
 const receiveForm =
@@ -69,8 +71,17 @@ function getStarted() {
         .scrollIntoView({
             behavior: "smooth"
         });
+        
 
 }
+addTextBtn.addEventListener(
+    "click",
+    () => {
+        textMassage.style.display = 
+        "block",
+        textMassage.focus();
+    }
+);
 getStartedBtn.addEventListener(
     "click",
     getStarted

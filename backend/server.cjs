@@ -121,10 +121,12 @@ const storage = multer.diskStorage({
         file,
         cb
     ) {
+
         cb(
             null,
             uploadDirectory
         );
+
     },
 
     filename: function (
@@ -145,7 +147,9 @@ const storage = multer.diskStorage({
             null,
             randomName + extension
         );
+
     }
+
 });
 
 // ==========================================
@@ -162,7 +166,9 @@ const upload = multer({
             500 * 1024 * 1024,
 
         files: 20
+
     }
+
 });
 
 // ==========================================
@@ -195,6 +201,7 @@ function generateShareCode() {
             );
 
         code += characters[index];
+
     }
 
     return code;
@@ -248,6 +255,7 @@ function deleteShare(code) {
                 fs.unlinkSync(
                     file.path
                 );
+
             }
 
         } catch (error) {
@@ -256,7 +264,9 @@ function deleteShare(code) {
                 "File deletion failed:",
                 error.message
             );
+
         }
+
     }
 
     shares.delete(code);
@@ -264,6 +274,7 @@ function deleteShare(code) {
     console.log(
         `Share ${code} deleted.`
     );
+
 }
 
 // ==========================================
@@ -284,9 +295,21 @@ app.post(
 
         try {
 
+            // ==========================================
+            // MESSAGE
+            // ==========================================
+
+            const message =
+                req.body.message || "";
+
+            // ==========================================
+            // VALIDATE MESSAGE + FILES
+            // ==========================================
+
             if (
-                !req.files ||
-                req.files.length === 0
+                (!req.files ||
+                    req.files.length === 0) &&
+                !message.trim()
             ) {
 
                 return res.status(400).json({
@@ -294,12 +317,22 @@ app.post(
                     success: false,
 
                     message:
-                        "Please upload at least one file."
+                        "Please add a message or select at least one file."
+
                 });
+
             }
+
+            // ==========================================
+            // CREATE SHARE CODE
+            // ==========================================
 
             const code =
                 createUniqueCode();
+
+            // ==========================================
+            // EXPIRY
+            // ==========================================
 
             const expiresAt =
                 Date.now() +
@@ -309,11 +342,16 @@ app.post(
                     1000
                 );
 
+            // ==========================================
+            // FILE DATA
+            // ==========================================
+
             const files =
-                req.files.map(
+                (req.files || []).map(
                     (file, index) => ({
 
-                        id: index,
+                        id:
+                            index,
 
                         name:
                             file.originalname,
@@ -329,17 +367,30 @@ app.post(
 
                         path:
                             file.path
+
                     })
                 );
+
+            // ==========================================
+            // STORE SHARE
+            // ==========================================
 
             shares.set(
                 code,
                 {
+
                     code,
+
+                    message:
+                        message.trim(),
+
                     files,
+
                     createdAt:
                         Date.now(),
+
                     expiresAt
+
                 }
             );
 
@@ -347,12 +398,16 @@ app.post(
                 `Share created: ${code}`
             );
 
+            // ==========================================
+            // RESPONSE
+            // ==========================================
+
             return res.status(201).json({
 
                 success: true,
 
                 message:
-                    "Files uploaded successfully.",
+                    "Data shared successfully.",
 
                 code,
 
@@ -360,6 +415,7 @@ app.post(
 
                 expiresIn:
                     600
+
             });
 
         } catch (error) {
@@ -375,8 +431,11 @@ app.post(
 
                 message:
                     "Upload failed."
+
             });
+
         }
+
     }
 );
 
@@ -395,6 +454,10 @@ app.get(
             req.params.code
                 .toUpperCase();
 
+        // ==========================================
+        // VALIDATE CODE
+        // ==========================================
+
         if (
             !/^[A-Z0-9]{6}$/.test(
                 code
@@ -407,8 +470,14 @@ app.get(
 
                 message:
                     "Invalid share code."
+
             });
+
         }
+
+        // ==========================================
+        // FIND SHARE
+        // ==========================================
 
         const share =
             shares.get(code);
@@ -421,8 +490,14 @@ app.get(
 
                 message:
                     "Share code not found."
+
             });
+
         }
+
+        // ==========================================
+        // CHECK EXPIRY
+        // ==========================================
 
         if (
             Date.now() >
@@ -437,8 +512,14 @@ app.get(
 
                 message:
                     "Share code has expired."
+
             });
+
         }
+
+        // ==========================================
+        // FILE INFORMATION
+        // ==========================================
 
         const files =
             share.files.map(
@@ -455,8 +536,13 @@ app.get(
 
                     type:
                         file.type
+
                 })
             );
+
+        // ==========================================
+        // RESPONSE
+        // ==========================================
 
         return res.json({
 
@@ -464,16 +550,21 @@ app.get(
 
             code,
 
+            message:
+                share.message,
+
             expiresAt:
                 share.expiresAt,
 
             files
+
         });
+
     }
 );
 
 // ==========================================
-// FLOAD FILE
+// DOWNLOAD FILE
 // ==========================================
 
 app.get(
@@ -492,6 +583,10 @@ app.get(
                 req.params.index
             );
 
+        // ==========================================
+        // VALIDATE CODE
+        // ==========================================
+
         if (
             !/^[A-Z0-9]{6}$/.test(
                 code
@@ -504,8 +599,14 @@ app.get(
 
                 message:
                     "Invalid share code."
+
             });
+
         }
+
+        // ==========================================
+        // VALIDATE FILE INDEX
+        // ==========================================
 
         if (
             !Number.isInteger(index) ||
@@ -518,8 +619,14 @@ app.get(
 
                 message:
                     "Invalid file index."
+
             });
+
         }
+
+        // ==========================================
+        // FIND SHARE
+        // ==========================================
 
         const share =
             shares.get(code);
@@ -532,8 +639,14 @@ app.get(
 
                 message:
                     "Share code not found."
+
             });
+
         }
+
+        // ==========================================
+        // CHECK EXPIRY
+        // ==========================================
 
         if (
             Date.now() >
@@ -548,8 +661,14 @@ app.get(
 
                 message:
                     "Share code has expired."
+
             });
+
         }
+
+        // ==========================================
+        // FIND FILE
+        // ==========================================
 
         const file =
             share.files[index];
@@ -562,8 +681,14 @@ app.get(
 
                 message:
                     "File not found."
+
             });
+
         }
+
+        // ==========================================
+        // CHECK PHYSICAL FILE
+        // ==========================================
 
         if (
             !fs.existsSync(
@@ -577,13 +702,20 @@ app.get(
 
                 message:
                     "Physical file not found."
+
             });
+
         }
+
+        // ==========================================
+        // DOWNLOAD
+        // ==========================================
 
         return res.download(
             file.path,
             file.name
         );
+
     }
 );
 
@@ -610,7 +742,9 @@ setInterval(
             ) {
 
                 deleteShare(code);
+
             }
+
         }
 
     },
@@ -647,6 +781,7 @@ app.get(
                 "index.html"
             )
         );
+
     }
 );
 
@@ -678,7 +813,9 @@ app.use(
 
                     message:
                         "File size cannot exceed 500 MB."
+
                 });
+
             }
 
             if (
@@ -692,8 +829,11 @@ app.use(
 
                     message:
                         "Maximum 20 files allowed."
+
                 });
+
             }
+
         }
 
         console.error(
@@ -707,7 +847,9 @@ app.use(
 
             message:
                 "Internal server error."
+
         });
+
     }
 );
 
@@ -725,5 +867,6 @@ app.listen(
         console.log(
             `Linkless server running on port ${PORT}`
         );
+
     }
 );
