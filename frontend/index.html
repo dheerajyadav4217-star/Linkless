@@ -89,7 +89,7 @@
     <main>
 
 
-        <!-- ================= HERO ================= -->
+        <!-- ================= HOME ================= -->
 
         <section
             id="home"
@@ -132,28 +132,20 @@
                     </p>
 
 
-                    <!-- HERO BUTTONS -->
+                    <!-- ================= THREE MAIN BUTTONS ================= -->
 
                     <div class="hero-buttons">
 
 
                         <!-- SEND DATA -->
-                         <button
+
+                        <button
                             type="button"
-                            class="btn btn-secondary"
-                            id="addTextBtn"
-                        >
-                            + Add Text
-                        </button>
-
-
-                        <label
-                            for ="fileInput"
                             class="btn btn-primary"
-                            
+                            id="sendDataBtn"
                         >
                             Send Data
-                        </label>
+                        </button>
 
 
                         <!-- RECEIVE DATA -->
@@ -166,8 +158,133 @@
                             Receive Data
                         </button>
 
+
+                        <!-- GENERATE CODE -->
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            id="uploadBtn"
+                        >
+                            Generate Code
+                        </button>
+
+
                     </div>
 
+
+                    <!-- ================= SHARE CARD ================= -->
+
+                    <div class="share-card">
+
+
+                        <p class="share-label">
+                            YOUR SHARE CODE
+                        </p>
+
+
+                        <h2 id="shareCode">
+                            ------
+                        </h2>
+
+
+                        <p class="expiry">
+
+                            Expires in
+
+                            <strong id="expiryTime">
+                                10:00
+                            </strong>
+
+                        </p>
+
+
+                        <button
+                            type="button"
+                            class="copy-btn"
+                            id="copyCodeBtn"
+                        >
+                            Copy Code
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= SEND DATA PAGE ================= -->
+
+        <section
+            id="sendDataPage"
+            class="send-data-page"
+        >
+
+            <div class="container">
+
+
+                <div class="send-data-box">
+
+
+                    <!-- CLOSE / BACK -->
+
+                    <button
+                        type="button"
+                        class="receive-close"
+                        id="closeSendDataBtn"
+                    >
+                        ×
+                    </button>
+
+
+                    <p class="eyebrow">
+                        SEND DATA
+                    </p>
+
+
+                    <h2>
+                        Add your data
+                    </h2>
+
+
+                    <p class="receive-description">
+
+                        Write a message or attach files
+                        that you want to share.
+
+                    </p>
+
+
+                    <!-- ================= MESSAGE BOX ================= -->
+
+                    <div class="message-box">
+
+
+                        <textarea
+                            id="textmassage"
+                            placeholder="Type your message..."
+                            rows="5"
+                        ></textarea>
+
+
+                        <!-- ATTACH BUTTON -->
+
+                        <label
+                            for="fileInput"
+                            class="attach-btn"
+                            title="Attach files"
+                        >
+                            +
+                        </label>
+
+
+                    </div>
 
 
                     <!-- ================= FILE INPUT ================= -->
@@ -176,73 +293,30 @@
                         type="file"
                         id="fileInput"
                         multiple
+                        hidden
                     >
-
 
 
                     <!-- ================= SELECTED FILES ================= -->
 
-                    <div id="selectedFiles"></div>
-                    <textarea
-                        id="textmassage"
-                        placeholder="Write Your Massage"
-                        row="4"
-                    ></textarea>    
+                    <div
+                        id="selectedFiles"
+                        class="selected-files"
+                    ></div>
 
 
-
-                    <!-- ================= GENERATE CODE ================= -->
+                    <!-- ================= DONE ================= -->
 
                     <button
                         type="button"
-                        class="btn btn-primary"
-                        id="uploadBtn"
+                        class="btn btn-primary done-btn"
+                        id="doneSendDataBtn"
                     >
-                        Generate Share Code
+                        Done
                     </button>
 
 
                 </div>
-
-
-
-                <!-- ================= SHARE CARD ================= -->
-
-                <div class="share-card">
-
-
-                    <p class="share-label">
-                        YOUR SHARE CODE
-                    </p>
-
-
-                    <h2 id="shareCode">
-                        LX82K7
-                    </h2>
-
-
-                    <p class="expiry">
-
-                        Expires in
-
-                        <strong id="expiryTime">
-                            10:00
-                        </strong>
-
-                    </p>
-
-
-                    <button
-                        type="button"
-                        class="copy-btn"
-                        id="copyCodeBtn"
-                    >
-                        Copy Code
-                    </button>
-
-
-                </div>
-
 
             </div>
 
@@ -352,19 +426,15 @@
 
                 <div class="section-heading">
 
-
                     <p class="eyebrow">
                         WHY LINKLESS
                     </p>
-
 
                     <h2>
                         Simple. Private. Temporary.
                     </h2>
 
-
                 </div>
-
 
 
                 <div class="feature-grid">
@@ -376,11 +446,9 @@
                             01
                         </span>
 
-
                         <h3>
                             No Contact Required
                         </h3>
-
 
                         <p>
                             Share data without saving phone
@@ -390,18 +458,15 @@
                     </article>
 
 
-
                     <article class="feature-card">
 
                         <span class="feature-number">
                             02
                         </span>
 
-
                         <h3>
                             Temporary Sharing
                         </h3>
-
 
                         <p>
                             Shared data can automatically
@@ -411,18 +476,15 @@
                     </article>
 
 
-
                     <article class="feature-card">
 
                         <span class="feature-number">
                             03
                         </span>
 
-
                         <h3>
                             Easy to Use
                         </h3>
-
 
                         <p>
                             Generate a code, share it and
@@ -447,25 +509,19 @@
             class="how-it-works"
         >
 
-
             <div class="container">
 
-
                 <div class="section-heading">
-
 
                     <p class="eyebrow">
                         HOW IT WORKS
                     </p>
 
-
                     <h2>
                         Four simple steps.
                     </h2>
 
-
                 </div>
-
 
 
                 <div class="steps-grid">
@@ -477,11 +533,9 @@
                             01
                         </span>
 
-
                         <h3>
                             Add Your Data
                         </h3>
-
 
                         <p>
                             Select the files or data you
@@ -491,18 +545,15 @@
                     </article>
 
 
-
                     <article class="step">
 
                         <span class="step-number">
                             02
                         </span>
 
-
                         <h3>
                             Generate Code
                         </h3>
-
 
                         <p>
                             Linkless creates a unique
@@ -512,18 +563,15 @@
                     </article>
 
 
-
                     <article class="step">
 
                         <span class="step-number">
                             03
                         </span>
 
-
                         <h3>
                             Share the Code
                         </h3>
-
 
                         <p>
                             Send the code to the person
@@ -533,18 +581,15 @@
                     </article>
 
 
-
                     <article class="step">
 
                         <span class="step-number">
                             04
                         </span>
 
-
                         <h3>
                             Receive Data
                         </h3>
-
 
                         <p>
                             The receiver enters the code
@@ -569,31 +614,25 @@
             class="security"
         >
 
-
             <div class="container security-container">
 
 
                 <div class="section-heading">
 
-
                     <p class="eyebrow">
                         SECURITY
                     </p>
 
-
                     <h2>
                         Built around temporary sharing.
                     </h2>
-
 
                     <p>
                         Linkless is designed to keep sharing
                         simple and controlled.
                     </p>
 
-
                 </div>
-
 
 
                 <div class="security-list">
@@ -605,7 +644,6 @@
                             Temporary Data
                         </h3>
 
-
                         <p>
                             Shared data can be automatically
                             removed after expiration.
@@ -614,13 +652,11 @@
                     </div>
 
 
-
                     <div class="security-item">
 
                         <h3>
                             One-Time Access
                         </h3>
-
 
                         <p>
                             A sharing session can be configured
@@ -630,13 +666,11 @@
                     </div>
 
 
-
                     <div class="security-item">
 
                         <h3>
                             Unique Code
                         </h3>
-
 
                         <p>
                             Each sharing session receives
@@ -661,22 +695,18 @@
             class="about"
         >
 
-
             <div class="container about-container">
 
 
                 <div class="section-heading">
 
-
                     <p class="eyebrow">
                         ABOUT LINKLESS
                     </p>
 
-
                     <h2>
                         Share without the hassle.
                     </h2>
-
 
                     <p>
 
@@ -687,9 +717,7 @@
 
                     </p>
 
-
                 </div>
-
 
 
                 <div class="about-points">
@@ -701,7 +729,6 @@
                             No Contact
                         </h3>
 
-
                         <p>
                             No need to save phone numbers or
                             exchange contact information.
@@ -710,13 +737,11 @@
                     </div>
 
 
-
                     <div>
 
                         <h3>
                             Simple Sharing
                         </h3>
-
 
                         <p>
                             Create a temporary code and share
@@ -742,7 +767,6 @@
 
     <footer class="footer">
 
-
         <div class="container footer-container">
 
 
@@ -752,13 +776,11 @@
                     Linkless
                 </h3>
 
-
                 <p>
                     No Link. No Contact. Just Code.
                 </p>
 
             </div>
-
 
 
             <p class="copyright">
