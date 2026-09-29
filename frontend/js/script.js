@@ -352,7 +352,7 @@ copyCodeBtn.addEventListener(
     "click",
     () => {
         copyCode(
-            document.getElementById("shereCode").textContent
+            shareCodeElement.textContent
         );
     }
 );
