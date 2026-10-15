@@ -1,0 +1,15 @@
+
+{
+  "name": "linkless",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Temporary internet-based data sharing",
+  "main": "backend/sever.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node backend/sever.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.0.0"
+  }
+}

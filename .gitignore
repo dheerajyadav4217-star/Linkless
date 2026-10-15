@@ -1,3 +1,1 @@
-node_modules/
-.env
-backend/uploads/
+.env node_module/
